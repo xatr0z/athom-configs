@@ -22,7 +22,12 @@ logger:
 web_server:
   port: 80
 
+# Insert your SSID and Your PWD after inital setup
 wifi:
+  ssid: !secret esphome_ssid
+  password: !secret esphome_pwd
+  domain: !secret esphome_domain
+  
   ap: {} # This spawns an AP with the device name and mac address with no password.
 
 captive_portal:
@@ -51,7 +56,11 @@ binary_sensor:
 
 sensor:
   - platform: uptime
-    name: "${friendly_name} Uptime Sensor"
+    name: "${friendly_name} Uptime"
+
+  - platform: wifi_signal
+    name: "$(friendly_name) WiFi Signal"
+    update_interval: 60s
 
   - platform: hlw8012
     sel_pin:
@@ -131,10 +140,5 @@ light:
       number: GPIO13
 
 time:
-  - platform: sntp
-
-text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: "${friendly_name} IP Address"
-      disabled_by_default: true
+  - platform: homeassistant
+    id: homeassistant_time
