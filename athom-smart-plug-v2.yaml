@@ -17,8 +17,11 @@ esp8266:
   restore_from_flash: true
 
 api:
+  encryption:
+    key: !secret esphome_api_key
 
 ota:
+  password: !secret esphome_ota_password
 
 logger:
   baud_rate: 0
